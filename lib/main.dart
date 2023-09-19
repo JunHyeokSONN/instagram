@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
+import 'package:instagram/notification.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ import './profile.dart';
 import './homepage.dart';
 import './upload.dart';
 import './store.dart';
+import './notification.dart';
 
 void main() {
   runApp(
@@ -103,11 +105,15 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     saveData();
     getData();
+    initNotification();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(child: Text('+'), onPressed: (){
+        showNotification();
+      },),
       appBar: AppBar(
         title: Text('Instagram'),
         actions: [
