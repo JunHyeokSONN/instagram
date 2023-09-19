@@ -29,6 +29,7 @@
 // );
 
 import 'package:flutter/material.dart';
+import './store.dart';
 
 var _var1;
 

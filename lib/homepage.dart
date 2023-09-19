@@ -4,6 +4,7 @@ import 'dart:convert';
 import './style.dart' as style;
 import './profile.dart';
 import './main.dart';
+import './store.dart';
 
 
 class HomePage extends StatefulWidget {

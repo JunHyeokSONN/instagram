@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './main.dart';
+import './store.dart';
 
 class Upload extends StatelessWidget {
   const Upload({Key? key, this.userImage, this.data, this.addData, this.addMyData, this.setUserContent, this.userContent}) : super(key: key);
@@ -12,8 +13,6 @@ class Upload extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.amber[100],

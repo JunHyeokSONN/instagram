@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './main.dart';
+import './store.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key:key);
@@ -9,9 +10,30 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(context.watch<Store2>().name),
         ),
-        body: ProfileHeader()
+        body: CustomScrollView(
+          slivers: [
+            // SliverAppBar(centerTitle: true, title: Text('Profile'),),
+            SliverToBoxAdapter(
+              child: ProfileHeader(),
+            ),
+            SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                      (c,i) => Container(
+                        child:
+                        context.watch<Store1>().profileImage.isEmpty
+                            ? Center(child: Icon(Icons.image, color: Colors.grey,),)
+                            : Image.network(context.watch<Store1>().profileImage[i]),
+                      ),
+                      childCount: context.watch<Store1>().profileImage.length,
+                ),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            ),
+          ],
+        )
+        // ProfileHeader()
     );
   }
 }
@@ -28,10 +50,7 @@ class ProfileHeader extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 30,
-            backgroundColor: context.watch<Store1>().profileImage.isEmpty ? Colors.grey : null,
-            backgroundImage: context.watch<Store1>().profileImage.isEmpty
-                ? null
-                : NetworkImage(context.watch<Store1>().profileImage[0]),
+            backgroundColor: Colors.grey,
           ),
           Text('팔로워 ${context.watch<Store1>().follower}명'),
           ElevatedButton(onPressed: (){
