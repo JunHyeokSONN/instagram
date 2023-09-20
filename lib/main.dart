@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     saveData();
     getData();
-    initNotification();
+    initNotification(context);
   }
 
   @override

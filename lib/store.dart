@@ -7,7 +7,7 @@ import './main.dart';
 class Store1 extends ChangeNotifier{
   var follower = 0;
   var checkPush = false;
-  var profileImage =[];
+  var profileImage = [];
 
   getData() async {
     var result = await http.get(Uri.parse('https://codingapple1.github.io/app/profile.json'));
