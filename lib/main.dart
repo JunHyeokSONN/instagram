@@ -112,7 +112,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(child: Text('+'), onPressed: (){
-        showNotification();
+        showNotification2();
       },),
       appBar: AppBar(
         title: Text('Instagram'),
