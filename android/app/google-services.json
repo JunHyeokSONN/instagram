@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "298089253389",
+    "project_id": "fluttergram-1746e",
+    "storage_bucket": "fluttergram-1746e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298089253389:android:f240c60de457cad6f9e344",
+        "android_client_info": {
+          "package_name": "com.JHS.fluttergram"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ4kLm6BjGhfRU-IYQY4BEyJ-bOIhEh8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
