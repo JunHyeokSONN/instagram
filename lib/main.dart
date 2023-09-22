@@ -14,9 +14,15 @@ import './homepage.dart';
 import './upload.dart';
 import './store.dart';
 import './notification.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:flutter/services.dart';
+
+Future<bool> requestExactAlarmPermission() async {
+  final platform = MethodChannel('dexterx.dev/flutter_local_notifications_example');
+  final hasPermission = await platform.invokeMethod('requestExactAlarmPermission');
+  return hasPermission;
+}
 
 void main() async {
 
@@ -118,7 +124,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(child: Text('+'), onPressed: (){
-        showNotification2();
+        showNotification();
       },),
       appBar: AppBar(
         title: Text('Instagram'),

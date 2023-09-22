@@ -5,42 +5,40 @@ import 'package:timezone/timezone.dart' as tz;
 
 final notifications = FlutterLocalNotificationsPlugin();
 
-
-//1. 앱로드시 실행할 기본설정
-initNotification(context) async {
-
-  //안드로이드용 아이콘파일 이름
+initNotification(BuildContext context) async {
   var androidSetting = AndroidInitializationSettings('app_icon');
-
-  //ios에서 앱 로드시 유저에게 권한요청하려면
-  var iosSetting = IOSInitializationSettings(
+  var iosSetting = DarwinInitializationSettings(
     requestAlertPermission: true,
     requestBadgePermission: true,
     requestSoundPermission: true,
   );
 
   var initializationSettings = InitializationSettings(
-      android: androidSetting,
-      iOS: iosSetting
+    android: androidSetting,
+    iOS: iosSetting,
   );
-  await notifications.initialize(
-    initializationSettings,
-    onSelectNotification: (payload){
+
+  await notifications.initialize(initializationSettings);
+
+  // 알림 클릭 동작 설정
+  FlutterLocalNotificationsPlugin()
+      .resolvePlatformSpecificImplementation<
+      AndroidFlutterLocalNotificationsPlugin>()
+      ?.getActiveNotifications()
+      .then((receivedNotifications) {
+    if (receivedNotifications.isNotEmpty) {
+      var payload = receivedNotifications.first.payload;
       Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Text('안뇨옹'),
-          )
+        context,
+        MaterialPageRoute(
+          builder: (context) => Text('안뇨옹'),
+        ),
       );
-    },
-    //알림 누를때 함수실행하고 싶으면
-    //onSelectNotification: 함수명추가
-  );
+    }
+  });
 }
 
-//2. 이 함수 원하는 곳에서 실행하면 알림 뜸
 showNotification() async {
-
   var androidDetails = AndroidNotificationDetails(
     '유니크한 알림 채널 ID',
     '알림종류 설명',
@@ -49,26 +47,22 @@ showNotification() async {
     color: Color.fromARGB(255, 255, 0, 0),
   );
 
-  var iosDetails = IOSNotificationDetails(
+  var iosDetails = DarwinNotificationDetails(
     presentAlert: true,
     presentBadge: true,
     presentSound: true,
   );
 
-  // 알림 id, 제목, 내용 맘대로 채우기
   notifications.show(
-      1,
-      '제목1',
-      '내용1',
-      NotificationDetails(android: androidDetails, iOS: iosDetails),
-    payload: '부가정보'
+    1,
+    '제목1',
+    '내용1',
+    NotificationDetails(android: androidDetails, iOS: iosDetails),
+    payload: '부가정보',
   );
 }
 
-
-
 showNotification2() async {
-
   tz.initializeTimeZones();
 
   var androidDetails = const AndroidNotificationDetails(
@@ -78,37 +72,27 @@ showNotification2() async {
     importance: Importance.max,
     color: Color.fromARGB(255, 255, 0, 0),
   );
-  var iosDetails = const IOSNotificationDetails(
+
+  var iosDetails = const DarwinNotificationDetails(
     presentAlert: true,
     presentBadge: true,
     presentSound: true,
   );
 
   notifications.zonedSchedule(
-      2,
-      '제목2',
-      '내용2',
-      makeDate(8, 30, 0),
-      // tz.TZDateTime.now(tz.local).add(Duration(seconds: 3)), // 현재시간
-      NotificationDetails(android: androidDetails, iOS: iosDetails),
-      androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation:
-      UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time // 매일 같은 시간에 알림 띄워줌, dayOfWeekendTime.
+    2,
+    '제목2',
+    '내용2',
+    makeDate(8, 30, 0),
+    NotificationDetails(android: androidDetails, iOS: iosDetails),
+    androidAllowWhileIdle: true,
+    uiLocalNotificationDateInterpretation:
+    UILocalNotificationDateInterpretation.absoluteTime,
+    matchDateTimeComponents: DateTimeComponents.time,
   );
-
-  // notifications.periodicallyShow(
-  //     2,
-  //     '제목2',
-  //     '내용2',
-  //     RepeatInterval.daily, // 매일반복
-  //     NotificationDetails(android: androidDetails, iOS: iosDetails),
-  //     androidAllowWhileIdle: true,
-  // );
 }
 
-
-makeDate(hour, min, sec){
+tz.TZDateTime makeDate(int hour, int min, int sec) {
   var now = tz.TZDateTime.now(tz.local);
   var when = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, min, sec);
   if (when.isBefore(now)) {
@@ -117,3 +101,4 @@ makeDate(hour, min, sec){
     return when;
   }
 }
+
