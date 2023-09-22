@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:instagram/notification.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import './style.dart' as style;
 import './profile.dart';
