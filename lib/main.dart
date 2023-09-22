@@ -14,6 +14,8 @@ import './upload.dart';
 import './store.dart';
 import './notification.dart';
 import 'package:firebase_core/firebase_core.dart';
+import './shop.dart';
+
 import 'firebase_options.dart';
 import 'package:flutter/services.dart';
 
@@ -151,7 +153,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ],
       ),
-      body: PageView(children: [[HomePage(data : data, addData: addData,),Text('샵페이지')][tab],]),
+      body: PageView(children: [[HomePage(data : data, addData: addData,),Shop()][tab],]),
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 20,
         showSelectedLabels: false,
